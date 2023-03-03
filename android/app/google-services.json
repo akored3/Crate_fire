@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "847425813069",
+    "project_id": "crate-fire",
+    "storage_bucket": "crate-fire.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847425813069:android:cb189fe2a961b3a83c3a04",
+        "android_client_info": {
+          "package_name": "com.metalbeard.crate_fire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "847425813069-l4lumpoomfcotvcvg9k7lbsjs1tqfdds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDRaJOKe7y39bjr5ggAEPASO6xNB2GQkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "847425813069-l4lumpoomfcotvcvg9k7lbsjs1tqfdds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
