@@ -1,5 +1,8 @@
 import 'package:crate_fire/constants.dart';
+import 'package:crate_fire/service/auth/auth_exceptions.dart';
+import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/utils/button.dart';
+import 'package:crate_fire/utils/show_error_dialog.dart';
 import 'package:flutter/material.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -12,11 +15,13 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final TextEditingController _username;
 
   @override
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    _username = TextEditingController();
     super.initState();
   }
 
@@ -24,6 +29,7 @@ class _SignUpFormState extends State<SignUpForm> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _username.dispose();
     super.dispose();
   }
 
@@ -63,6 +69,20 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ),
           TextField(
+            controller: _email,
+            keyboardType: TextInputType.emailAddress,
+            autocorrect: false,
+            decoration: InputDecoration(
+              focusColor: Colors.white,
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? bodyTextColorLightTheme
+                          : secondaryColorLightTheme)),
+              labelText: 'Username',
+            ),
+          ),
+          TextField(
             controller: _password,
             autocorrect: false,
             obscureText: true,
@@ -77,8 +97,38 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              print('button clicked');
+            onTap: () async {
+              late final email = _email.text;
+              late final password = _password.text;
+              late final username = _username.text;
+              try {
+                await AuthService.fireBase().createUser(
+                  email: email,
+                  password: password,
+                );
+                await AuthService.fireBase().saveUsername(username);
+                await AuthService.fireBase().sendEmailVerification();
+              } on WeakPasswordAuthException {
+                await showErrDialog(
+                  context,
+                  'Weak password',
+                );
+              } on EmailAlreadyInUseAuthException {
+                await showErrDialog(
+                  context,
+                  'Email already in use',
+                );
+              } on InvalidEmailAuthException {
+                await showErrorDialog(
+                  context,
+                  'Invalid email',
+                );
+              } on GenericAuthException {
+                await showErrorDialog(
+                  context,
+                  'Error occured',
+                );
+              }
             },
             child: const Button(
               borderRadius: 10,

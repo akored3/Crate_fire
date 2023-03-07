@@ -11,6 +11,7 @@ abstract class AuthProvider {
     required String email,
     required String password,
   });
+  Future<void> saveUsername(String username);
   Future<void> logout();
   Future<void> sendEmailVerification();
 }

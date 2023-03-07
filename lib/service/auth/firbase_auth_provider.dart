@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crate_fire/firebase_options.dart';
 import 'package:crate_fire/service/auth/auth_exceptions.dart';
 import 'package:crate_fire/service/auth/auth_provider.dart';
@@ -101,5 +102,16 @@ class FirebaseAuthProvider implements AuthProvider {
   Future<void> initialize() async {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
+  }
+
+  @override
+  Future<void> saveUsername(String username) async {
+    final user = currentUser;
+    if (user == null) {
+      throw UserNotLoggedInAuthException();
+    }
+    final userDocRef =
+        FirebaseFirestore.instance.collection('users').doc(user.id);
+    await userDocRef.set({'username': username}, SetOptions(merge: true));
   }
 }

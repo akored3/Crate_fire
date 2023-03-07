@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+//How can i add a text button at the top of this page that navigates to another page
 class GetStartedPage extends StatefulWidget {
   const GetStartedPage({super.key});
 
@@ -38,42 +39,31 @@ class _GetStartedPageState extends State<GetStartedPage> {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: Container(
-            color: Colors.black,
-            margin: const EdgeInsets.all(
-              defaultPadding * 2,
-            ),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Center(
-              child: Column(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      print('login');
-                      // Navigator.of(context).pushNamedAndRemoveUntil(
-                      //     signInRoute, (route) => false);
-                    },
-                    child: Text(
-                      'Skip to Login',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('login');
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          signInRoute, (route) => false);
-                    },
-                    child: Text(
-                      'Skip to Login',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+          // child: Container(
+          //   color: Colors.black,
+          //   margin: const EdgeInsets.symmetric(
+          //     vertical: defaultPadding * 5,
+          //     horizontal: defaultPadding,
+          //   ),
+          //   width: MediaQuery.of(context).size.width,
+          //   height: MediaQuery.of(context).size.height,
+          //   child: Center(
+          //     child: Column(
+          //       children: [
+          //         //When this inkwell gets clicked it doesn't go to the route
+          //         InkWell(
+          //           onTap: () {
+          //             Navigator.pushNamed(context, signInRoute);
+          //           },
+          //           child: Text(
+          //             'Skip to Login',
+          //             style: Theme.of(context).textTheme.bodyMedium,
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ),
       ),
     );
