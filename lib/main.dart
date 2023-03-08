@@ -20,7 +20,7 @@ void main() {
     title: 'Flutter Demo',
     theme: lightThemeData,
     darkTheme: darkThemeData,
-    home: const SignInSignUp(),
+    home: const GetStartedPage(),
   ));
 }
 
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                 return const VerifyEmailView();
               }
             } else {
-              return const SignInSignUp();
+              return const GetStartedPage();
             }
           default:
             return const CircularProgressIndicator();

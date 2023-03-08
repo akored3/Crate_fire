@@ -6,13 +6,17 @@ import 'package:flutter/foundation.dart';
 class AuthUser {
   final String id;
   final bool isEmailVirefied;
+  final String email;
+
   const AuthUser({
     required this.isEmailVirefied,
     required this.id,
+    required this.email,
   });
   //Copying Firebase user into my AuthUser class
   factory AuthUser.fromFirebase(User user) => AuthUser(
         isEmailVirefied: user.emailVerified,
         id: user.uid,
+        email: user.email!,
       );
 }

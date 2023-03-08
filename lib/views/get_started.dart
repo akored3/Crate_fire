@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-//How can i add a text button at the top of this page that navigates to another page
 class GetStartedPage extends StatefulWidget {
   const GetStartedPage({super.key});
 
@@ -16,6 +15,8 @@ class _GetStartedPageState extends State<GetStartedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //I want a Skip to Login TextButton at the top of this page that navigates
+      // to a login page and a Get started button at the bottom
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
@@ -40,7 +41,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
             ),
           ),
           // child: Container(
-          //   color: Colors.black,
+          //   color: Colors.white,
           //   margin: const EdgeInsets.symmetric(
           //     vertical: defaultPadding * 5,
           //     horizontal: defaultPadding,
