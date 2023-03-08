@@ -1,8 +1,6 @@
-import 'package:crate_fire/constants.dart';
+import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/views/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

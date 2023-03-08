@@ -35,7 +35,7 @@ class Button extends StatelessWidget {
               style: GoogleFonts.montserrat(
                 fontSize: 15,
                 color: textColor,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.bold,
               ),
               children: [
                 TextSpan(text: buttonText),

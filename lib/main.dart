@@ -1,4 +1,4 @@
-import 'package:crate_fire/constants.dart';
+import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/theme.dart';
 import 'package:crate_fire/views/get_started.dart';
@@ -16,6 +16,7 @@ void main() {
     routes: {
       signInRoute: (context) => const SignInPage(),
       signUpRoute: (context) => const SignUpPage(),
+      signInSignUpRoute: (context) => const SignInSignUp(),
     },
     title: 'Flutter Demo',
     theme: lightThemeData,

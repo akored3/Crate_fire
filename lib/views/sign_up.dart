@@ -1,4 +1,4 @@
-import 'package:crate_fire/constants.dart';
+import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/service/auth/auth_exceptions.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/utils/button.dart';

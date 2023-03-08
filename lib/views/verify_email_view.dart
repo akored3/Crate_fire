@@ -1,4 +1,4 @@
-import 'package:crate_fire/constants.dart';
+import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 

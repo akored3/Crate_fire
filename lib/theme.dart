@@ -1,4 +1,4 @@
-import 'package:crate_fire/constants.dart';
+import 'package:crate_fire/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

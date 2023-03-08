@@ -16,6 +16,3 @@ const textColorDarkTheme = Color(0xFF132144);
 const bodyTextColorDarkTheme = Color(0xFF78819B);
 
 const defaultPadding = 16.0;
-
-const signInRoute = '/signin/';
-const signUpRoute = '/signup/';
