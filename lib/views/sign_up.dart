@@ -1,4 +1,5 @@
 import 'package:crate_fire/constants/constants.dart';
+import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/service/auth/auth_exceptions.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/utils/button.dart';
@@ -69,8 +70,8 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ),
           TextField(
-            controller: _email,
-            keyboardType: TextInputType.emailAddress,
+            controller: _username,
+            keyboardType: TextInputType.name,
             autocorrect: false,
             decoration: InputDecoration(
               focusColor: Colors.white,
@@ -108,6 +109,9 @@ class _SignUpFormState extends State<SignUpForm> {
                 );
                 await AuthService.fireBase().saveUsername(username);
                 await AuthService.fireBase().sendEmailVerification();
+
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(helloPageRoute, (route) => false);
               } on WeakPasswordAuthException {
                 await showErrDialog(
                   context,

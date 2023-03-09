@@ -17,11 +17,12 @@ void main() {
       signInRoute: (context) => const SignInPage(),
       signUpRoute: (context) => const SignUpPage(),
       signInSignUpRoute: (context) => const SignInSignUp(),
+      helloPageRoute: (context) => const HelloPage(),
     },
-    title: 'Flutter Demo',
+    title: 'Crate_fire',
     theme: lightThemeData,
     darkTheme: darkThemeData,
-    home: const GetStartedPage(),
+    home: const HomePage(),
   ));
 }
 
