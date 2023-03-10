@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart'
 import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
+  //Write a service like this that saves and retrieves user data to Firebase Firestore
   @override
   Future<AuthUser> createUser({
     required String email,

@@ -1,5 +1,9 @@
 import 'package:crate_fire/constants/constants.dart';
+import 'package:crate_fire/constants/routes.dart';
+import 'package:crate_fire/service/auth/auth_exceptions.dart';
+import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/utils/button.dart';
+import 'package:crate_fire/utils/show_error_dialog.dart';
 import 'package:flutter/material.dart';
 
 class SignInForm extends StatefulWidget {
@@ -53,6 +57,9 @@ class _SignInFormState extends State<SignInForm> {
             ),
           ),
           TextField(
+            controller: _password,
+            autocorrect: false,
+            obscureText: true,
             decoration: InputDecoration(
               focusColor: Colors.white,
               focusedBorder: UnderlineInputBorder(
@@ -75,8 +82,40 @@ class _SignInFormState extends State<SignInForm> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              print('button clicked');
+            onTap: () async {
+              try {
+                final email = _email.text;
+                final password = _password.text;
+                await AuthService.fireBase().login(
+                  email: email,
+                  password: password,
+                );
+                final user = AuthService.fireBase().currentUser;
+                if (user?.isEmailVirefied ?? false) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      helloPageRoute, (route) => false);
+                } else {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    verifyEmailRoute,
+                    (route) => false,
+                  );
+                }
+              } on UserNotFoundAuthException {
+                await showErrorDialog(
+                  context,
+                  'User not found',
+                );
+              } on WrongPasswordAuthException {
+                await showErrorDialog(
+                  context,
+                  'Invalid credentials',
+                );
+              } on GenericAuthException {
+                await showErrorDialog(
+                  context,
+                  'Error occured',
+                );
+              }
             },
             child: const Button(
               borderRadius: 10,

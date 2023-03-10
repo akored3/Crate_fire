@@ -1,4 +1,5 @@
 const signInRoute = '/signin/';
 const signUpRoute = '/signup/';
 const signInSignUpRoute = '/signinsignup/';
-const helloPageRoute = '/helloUser';
+const helloPageRoute = '/helloUser/';
+const verifyEmailRoute = '/verify-email/';

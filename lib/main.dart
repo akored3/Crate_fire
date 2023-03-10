@@ -18,6 +18,7 @@ void main() {
       signUpRoute: (context) => const SignUpPage(),
       signInSignUpRoute: (context) => const SignInSignUp(),
       helloPageRoute: (context) => const HelloPage(),
+      verifyEmailRoute: (context) => const VerifyEmailView(),
     },
     title: 'Crate_fire',
     theme: lightThemeData,
