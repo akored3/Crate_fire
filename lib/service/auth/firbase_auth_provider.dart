@@ -104,15 +104,4 @@ class FirebaseAuthProvider implements AuthProvider {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
   }
-
-  @override
-  Future<void> saveUsername(String username) async {
-    final user = currentUser;
-    if (user == null) {
-      throw UserNotLoggedInAuthException();
-    }
-    final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(user.id);
-    await userDocRef.set({'username': username}, SetOptions(merge: true));
-  }
 }

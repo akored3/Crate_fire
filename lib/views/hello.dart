@@ -1,8 +1,8 @@
 import 'package:crate_fire/constants/constants.dart';
-import 'package:crate_fire/service/auth/auth_exceptions.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/service/firestore_provider.dart';
-import 'package:crate_fire/utils/button.dart';
+import 'package:crate_fire/utilities/button.dart';
+import 'package:crate_fire/views/get_started.dart';
 import 'package:flutter/material.dart';
 
 class HelloPage extends StatelessWidget {
@@ -14,7 +14,7 @@ class HelloPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: FirestoreProvider.getUserdata(userId),
+        future: FirestoreProvider.getUserdata(userId: userId),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
@@ -38,7 +38,7 @@ class HelloPage extends StatelessWidget {
                   ),
                 );
               } else {
-                throw UserNotFoundAuthException();
+                return const GetStartedPage();
               }
             default:
               return const CircularProgressIndicator();

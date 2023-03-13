@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore: ^4.1.0
   firebase_analytics: ^10.0.6
   quickalert: ^1.0.1
+  scroll_date_picker: ^3.6.1
 
 dev_dependencies:
   flutter_test:

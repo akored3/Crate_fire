@@ -3,6 +3,7 @@ import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/theme.dart';
 import 'package:crate_fire/views/get_started.dart';
 import 'package:crate_fire/views/hello.dart';
+import 'package:crate_fire/views/set_up_profile_view.dart';
 import 'package:crate_fire/views/sign_in_page.dart';
 import 'package:crate_fire/views/sign_up_page.dart';
 import 'package:crate_fire/views/signin_signup.dart';
@@ -19,6 +20,7 @@ void main() {
       signInSignUpRoute: (context) => const SignInSignUp(),
       helloPageRoute: (context) => const HelloPage(),
       verifyEmailRoute: (context) => const VerifyEmailView(),
+      getsStartedPageRoute: (context) => const GetStartedPage(),
     },
     title: 'Crate_fire',
     theme: lightThemeData,

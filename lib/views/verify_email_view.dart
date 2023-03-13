@@ -32,7 +32,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             onPressed: () async {
               await AuthService.fireBase().logout();
               Navigator.of(context).pushNamedAndRemoveUntil(
-                signUpRoute,
+                getsStartedPageRoute,
                 (route) => false,
               );
             },

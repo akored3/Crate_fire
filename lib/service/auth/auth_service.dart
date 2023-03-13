@@ -34,7 +34,4 @@ class AuthService implements AuthProvider {
 
   @override
   Future<void> initialize() => provider.initialize();
-
-  @override
-  Future<void> saveUsername(String username) => provider.saveUsername(username);
 }

@@ -2,8 +2,8 @@ import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/service/auth/auth_exceptions.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
-import 'package:crate_fire/utils/button.dart';
-import 'package:crate_fire/utils/show_error_dialog.dart';
+import 'package:crate_fire/utilities/button.dart';
+import 'package:crate_fire/utilities/dialog/show_error_dialog.dart';
 import 'package:flutter/material.dart';
 
 class SignInForm extends StatefulWidget {
