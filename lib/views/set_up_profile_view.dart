@@ -97,7 +97,7 @@ class _SetProfileState extends State<SetProfile> {
             Container(
               margin: const EdgeInsets.only(
                 top: defaultPadding * 2,
-                bottom: defaultPadding,
+                bottom: defaultPadding * 2,
               ),
               child: Row(
                 children: [
@@ -118,7 +118,7 @@ class _SetProfileState extends State<SetProfile> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: TextFormField(
                       controller: _dateOfBirth,
