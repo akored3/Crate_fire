@@ -3,7 +3,6 @@ import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/theme.dart';
 import 'package:crate_fire/views/get_started.dart';
 import 'package:crate_fire/views/hello.dart';
-import 'package:crate_fire/views/set_up_profile_view.dart';
 import 'package:crate_fire/views/sign_in_page.dart';
 import 'package:crate_fire/views/sign_up_page.dart';
 import 'package:crate_fire/views/signin_signup.dart';
@@ -18,14 +17,14 @@ void main() {
       signInRoute: (context) => const SignInPage(),
       signUpRoute: (context) => const SignUpPage(),
       signInSignUpRoute: (context) => const SignInSignUp(),
-      helloPageRoute: (context) => const HelloPage(),
+      helloPageRoute: (context) => const SetUpProfile(),
       verifyEmailRoute: (context) => const VerifyEmailView(),
       getsStartedPageRoute: (context) => const GetStartedPage(),
     },
     title: 'Crate_fire',
     theme: lightThemeData,
     darkTheme: darkThemeData,
-    home: const SetProfile(),
+    home: const HomePage(),
   ));
 }
 
@@ -42,7 +41,7 @@ class HomePage extends StatelessWidget {
             final user = AuthService.fireBase().currentUser;
             if (user != null) {
               if (user.isEmailVirefied) {
-                return const HelloPage();
+                return const SetUpProfile();
               } else {
                 return const VerifyEmailView();
               }

@@ -25,7 +25,7 @@ class FirestoreProvider {
 //is this function ok?
   Future<void> saveOtherUserData({
     required String fullName,
-    required DateTime dateOfBirth,
+    required String dateOfBirth,
     required String gender,
     required String country,
   }) async {
@@ -37,7 +37,7 @@ class FirestoreProvider {
     try {
       await userDocRef.update({
         'fullName': fullName,
-        'dateOfBirth': Timestamp.fromDate(dateOfBirth),
+        'dateOfBirth': dateOfBirth,
         'gender': gender,
         'country': country
       });
