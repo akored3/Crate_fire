@@ -75,6 +75,7 @@ class _SignUpFormState extends State<SignUpForm> {
             keyboardType: TextInputType.name,
             autocorrect: false,
             decoration: InputDecoration(
+              suffixIcon: const Icon(Icons.check_circle),
               focusColor: Colors.white,
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -89,6 +90,7 @@ class _SignUpFormState extends State<SignUpForm> {
             autocorrect: false,
             obscureText: true,
             decoration: InputDecoration(
+              suffixIcon: const Icon(Icons.password),
               focusColor: Colors.white,
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(

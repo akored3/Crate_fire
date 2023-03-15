@@ -1,4 +1,5 @@
 import 'package:crate_fire/constants/constants.dart';
+import 'package:crate_fire/utilities/button.dart';
 import 'package:flutter/material.dart';
 
 class SetProfile extends StatefulWidget {
@@ -49,6 +50,30 @@ class _SetProfileState extends State<SetProfile> {
     }
   }
 
+  Future<void> _pickGender(BuildContext context) async {
+    await showDialog<void>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text('Select Gender'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    _gender.text = 'Male';
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Male'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    _gender.text = 'Female';
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Female'),
+                ),
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,90 +94,105 @@ class _SetProfileState extends State<SetProfile> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
-      body: Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: defaultPadding + 5,
-          vertical: defaultPadding * 2,
-        ),
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: defaultPadding * 2),
-              height: MediaQuery.of(context).size.height / 20,
-              width: MediaQuery.of(context).size.width,
-              // color: Colors.white,
-              child: Text('Let\'s set up your Profile',
-                  style: Theme.of(context).textTheme.labelLarge),
-            ),
-            TextFormField(
-              controller: _fullName,
-              keyboardType: TextInputType.name,
-              decoration: InputDecoration(
-                hintText: 'Full name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: defaultPadding + 5,
+            vertical: defaultPadding * 2,
+          ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: defaultPadding * 2),
+                height: MediaQuery.of(context).size.height / 20,
+                width: MediaQuery.of(context).size.width,
+                // color: Colors.white,
+                child: Text('Let\'s set up your Profile',
+                    style: Theme.of(context).textTheme.headlineSmall),
+              ),
+              TextFormField(
+                controller: _fullName,
+                keyboardType: TextInputType.name,
+                decoration: InputDecoration(
+                  hintText: 'Full name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: defaultPadding * 2,
-                bottom: defaultPadding * 2,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      keyboardType: TextInputType.datetime,
-                      controller: _dateOfBirth,
-                      // keyboardType: TextInputType.datetime,
-                      decoration: InputDecoration(
-                        hintText: 'Date of Birth',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () => _pickDate(context),
-                          icon: const Icon(Icons.expand_more),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: defaultPadding * 2,
+                  bottom: defaultPadding * 2,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        keyboardType: TextInputType.datetime,
+                        controller: _dateOfBirth,
+                        // keyboardType: TextInputType.datetime,
+                        decoration: InputDecoration(
+                          hintText: 'Date of Birth',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () => _pickDate(context),
+                            icon: const Icon(Icons.expand_more),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _dateOfBirth,
-                      // keyboardType: TextInputType.datetime,
-                      decoration: InputDecoration(
-                        hintText: 'Gender',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () => _pickDate(context),
-                          icon: const Icon(Icons.expand_more),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _gender,
+                        // keyboardType: TextInputType.datetime,
+                        decoration: InputDecoration(
+                          hintText: 'Gender',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () => _pickGender(context),
+                            icon: const Icon(Icons.expand_more),
+                          ),
                         ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+              TextFormField(
+                controller: _country,
+                // keyboardType: TextInputType.datetime,
+                decoration: InputDecoration(
+                  hintText: 'Country',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ],
-              ),
-            ),
-            TextFormField(
-              controller: _dateOfBirth,
-              // keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                hintText: 'Country',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () => _pickDate(context),
-                  icon: const Icon(Icons.expand_more),
+                  suffixIcon: IconButton(
+                    onPressed: () => _pickDate(context),
+                    icon: const Icon(Icons.expand_more),
+                  ),
                 ),
               ),
-            )
-          ],
+              Container(
+                margin: const EdgeInsets.only(
+                  top: defaultPadding * 15,
+                ),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: const Button(
+                      borderRadius: defaultPadding,
+                      buttonColor: [Colors.black, Colors.black],
+                      textColor: Colors.white,
+                      buttonText: 'Next'),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

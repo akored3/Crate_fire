@@ -25,7 +25,7 @@ void main() {
     title: 'Crate_fire',
     theme: lightThemeData,
     darkTheme: darkThemeData,
-    home: const HomePage(),
+    home: const SetProfile(),
   ));
 }
 
