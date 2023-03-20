@@ -1,7 +1,8 @@
 import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
-import 'package:crate_fire/service/firestore_provider.dart';
+import 'package:crate_fire/service/cloud/firestore_provider.dart';
 import 'package:crate_fire/utilities/button.dart';
+import 'package:crate_fire/utilities/widgets/input_widget.dart';
 import 'package:crate_fire/views/get_started.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +39,8 @@ class _SetUpProfileState extends State<SetUpProfile> {
   }
 
   DateTime _selectedDate = DateTime(2017);
+
+  //function to pick date
   Future<void> _pickDate(
     BuildContext context,
   ) async {
@@ -55,6 +58,7 @@ class _SetUpProfileState extends State<SetUpProfile> {
     }
   }
 
+//Dialog to pick gender
   Future<void> _pickGender(BuildContext context) async {
     await showDialog<void>(
         context: context,
@@ -125,21 +129,14 @@ class _SetUpProfileState extends State<SetUpProfile> {
                               'Hello @$username let\'s set up your Profile',
                               style: Theme.of(context).textTheme.bodySmall),
                         ),
-                        TextFormField(
-                          controller: _fullName,
-                          keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
-                            hintText: 'Full name',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                        UserDataInputField(
+                          input: _fullName,
+                          hintText: 'Full name',
                         ),
                         Container(
                           margin: const EdgeInsets.only(
-                            top: defaultPadding * 2,
-                            bottom: defaultPadding * 2,
-                          ),
+                              top: defaultPadding * 2,
+                              bottom: defaultPadding * 2),
                           child: Row(
                             children: [
                               Expanded(
@@ -178,15 +175,9 @@ class _SetUpProfileState extends State<SetUpProfile> {
                             ],
                           ),
                         ),
-                        TextFormField(
-                          controller: _country,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            hintText: 'Country',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                        UserDataInputField(
+                          input: _country,
+                          hintText: 'Full name',
                         ),
                         Container(
                           margin: const EdgeInsets.only(
@@ -194,10 +185,10 @@ class _SetUpProfileState extends State<SetUpProfile> {
                           ),
                           child: GestureDetector(
                             onTap: () async {
-                              final fullName = _fullName.text;
-                              final dateOfBirth = _dateOfBirth.text;
-                              final gender = _gender.text;
-                              final country = _country.text;
+                              late final fullName = _fullName.text;
+                              late final dateOfBirth = _dateOfBirth.text;
+                              late final gender = _gender.text;
+                              late final country = _country.text;
 
                               await FirestoreProvider().saveOtherUserData(
                                 fullName: fullName,
