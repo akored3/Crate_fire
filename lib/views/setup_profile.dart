@@ -113,31 +113,30 @@ class _SetUpProfileState extends State<SetUpProfile> {
                   final userData = snapshot.data!;
                   final username = userData['username'];
                   return Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding + 5,
-                      vertical: defaultPadding * 2,
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin:
-                              const EdgeInsets.only(bottom: defaultPadding * 2),
-                          height: MediaQuery.of(context).size.height / 20,
-                          width: MediaQuery.of(context).size.width,
-                          // color: Colors.white,
-                          child: Text(
-                              'Hello @$username let\'s set up your Profile',
-                              style: Theme.of(context).textTheme.bodySmall),
-                        ),
-                        UserDataInputField(
-                          input: _fullName,
-                          hintText: 'Full name',
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                              top: defaultPadding * 2,
-                              bottom: defaultPadding * 2),
-                          child: Row(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding + 5,
+                        vertical: defaultPadding * 2,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                                bottom: defaultPadding * 2),
+                            height: MediaQuery.of(context).size.height / 20,
+                            width: MediaQuery.of(context).size.width,
+                            // color: Colors.white,
+                            child: Text(
+                                'Hello @$username let\'s set up your Profile',
+                                style: Theme.of(context).textTheme.labelLarge),
+                          ),
+                          UserDataInputField(
+                            input: _fullName,
+                            hintText: 'Full name',
+                          ),
+                          const SizedBox(
+                            height: defaultPadding * 2,
+                          ),
+                          Row(
                             children: [
                               Expanded(
                                 child: TextFormField(
@@ -174,16 +173,17 @@ class _SetUpProfileState extends State<SetUpProfile> {
                               ),
                             ],
                           ),
-                        ),
-                        UserDataInputField(
-                          input: _country,
-                          hintText: 'Full name',
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: defaultPadding * 15,
+                          const SizedBox(
+                            height: defaultPadding * 2,
                           ),
-                          child: GestureDetector(
+                          UserDataInputField(
+                            input: _country,
+                            hintText: 'Full name',
+                          ),
+                          const SizedBox(
+                            height: defaultPadding * 2,
+                          ),
+                          GestureDetector(
                             onTap: () async {
                               late final fullName = _fullName.text;
                               late final dateOfBirth = _dateOfBirth.text;
@@ -203,10 +203,8 @@ class _SetUpProfileState extends State<SetUpProfile> {
                                 textColor: Colors.white,
                                 buttonText: 'Next'),
                           ),
-                        )
-                      ],
-                    ),
-                  );
+                        ],
+                      ));
                 } else {
                   return const GetStartedPage();
                 }
