@@ -41,7 +41,6 @@ class _SignUpFormState extends State<SignUpForm> {
       margin: const EdgeInsets.only(top: defaultPadding * 3.5),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 2.0,
-      // color: Colors.red,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -113,8 +112,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 );
                 await FirestoreProvider().saveUsername(username: username);
                 await AuthService.fireBase().sendEmailVerification();
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(helloPageRoute, (route) => false);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    setupProfilePageRoute, (route) => false);
               } on WeakPasswordAuthException {
                 await showErrDialog(
                   context,
@@ -126,12 +125,12 @@ class _SignUpFormState extends State<SignUpForm> {
                   'Email already in use',
                 );
               } on InvalidEmailAuthException {
-                await showErrorDialog(
+                await showErrDialog(
                   context,
                   'Invalid email',
                 );
               } on GenericAuthException {
-                await showErrorDialog(
+                await showErrDialog(
                   context,
                   'Error occured',
                 );

@@ -91,9 +91,9 @@ class _SignInFormState extends State<SignInForm> {
                   password: password,
                 );
                 final user = AuthService.fireBase().currentUser;
-                if (user?.isEmailVirefied ?? false) {
+                if (user?.isEmailVerified ?? false) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      helloPageRoute, (route) => false);
+                      welcomeUserPageRoute, (route) => false);
                 } else {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     verifyEmailRoute,

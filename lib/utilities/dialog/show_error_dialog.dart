@@ -39,7 +39,7 @@ Future<void> showErrDialog(BuildContext context, String text) {
   return QuickAlert.show(
     context: context,
     type: QuickAlertType.error,
-    title: 'An Error Occured',
+    title: 'Sorry You\'ve encountered an error',
     text: text,
   );
 }

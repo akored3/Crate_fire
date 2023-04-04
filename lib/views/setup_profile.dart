@@ -13,9 +13,9 @@ class SetUpProfile extends StatefulWidget {
   State<SetUpProfile> createState() => _SetUpProfileState();
 }
 
-class _SetUpProfileState extends State<SetUpProfile> {
-  String get userId => AuthService.fireBase().currentUser!.id;
+String get userId => AuthService.fireBase().currentUser!.id;
 
+class _SetUpProfileState extends State<SetUpProfile> {
   late final TextEditingController _fullName;
   late final TextEditingController _dateOfBirth;
   late final TextEditingController _gender;
