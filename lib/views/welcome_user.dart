@@ -2,10 +2,13 @@ import 'package:crate_fire/constants/constants.dart' show defaultPadding;
 import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/enums/menu_actions.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
+import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
+import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/cloud/firestore_provider.dart';
 import 'package:crate_fire/utilities/dialog/logout_dialog.dart';
 import 'package:crate_fire/views/setup_profile.dart' show userId;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WelcomeUser extends StatelessWidget {
   const WelcomeUser({super.key});
@@ -23,11 +26,12 @@ class WelcomeUser extends StatelessWidget {
               case MenuAction.logout:
                 final shouldLogout = await showLogoutDialog(context);
                 if (shouldLogout) {
-                  AuthService.fireBase().logout();
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    signInRoute,
-                    (_) => false,
-                  );
+                  context.read<AuthBloc>().add(const AuthEventLogout());
+                  // AuthService.fireBase().logout();
+                  // Navigator.of(context).pushNamedAndRemoveUntil(
+                  //   getsStartedPageRoute,
+                  //   (_) => false,
+                  // );
                 }
             }
           }, itemBuilder: (context) {

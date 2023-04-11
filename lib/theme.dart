@@ -12,5 +12,6 @@ final darkThemeData = ThemeData(
   brightness: Brightness.dark,
   primaryColor: primaryColor2,
   scaffoldBackgroundColor: bgColorDarkTheme,
+  appBarTheme: const AppBarTheme(),
   textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
 );

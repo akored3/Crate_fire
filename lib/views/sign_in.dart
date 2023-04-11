@@ -1,10 +1,9 @@
 import 'package:crate_fire/constants/constants.dart';
-import 'package:crate_fire/constants/routes.dart';
-import 'package:crate_fire/service/auth/auth_exceptions.dart';
-import 'package:crate_fire/service/auth/auth_service.dart';
+import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
+import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/utilities/button.dart';
-import 'package:crate_fire/utilities/dialog/show_error_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -34,7 +33,7 @@ class _SignInFormState extends State<SignInForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: defaultPadding * 4.5),
+      margin: const EdgeInsets.only(top: defaultPadding * 4.0),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 2.5,
       // color: Colors.black,
@@ -81,47 +80,35 @@ class _SignInFormState extends State<SignInForm> {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () async {
-              try {
-                final email = _email.text;
+          Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            child: GradientButton(
+              label: 'Sign in',
+              gradient: const LinearGradient(
+                colors: [primaryColor2, primaryColor1],
+              ),
+              onPressed: () async {
                 final password = _password.text;
-                await AuthService.fireBase().login(
-                  email: email,
-                  password: password,
-                );
-                final user = AuthService.fireBase().currentUser;
-                if (user?.isEmailVerified ?? false) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      welcomeUserPageRoute, (route) => false);
-                } else {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    verifyEmailRoute,
-                    (route) => false,
+                final email = _email.text;
+                context.read<AuthBloc>().add(
+                      AuthEventLogin(
+                        email,
+                        password,
+                      ),
+                    );
+              },
+              height: MediaQuery.of(context).size.height / 10,
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<AuthBloc>().add(
+                    const AuthEventShouldRegister(),
                   );
-                }
-              } on UserNotFoundAuthException {
-                await showErrorDialog(
-                  context,
-                  'User not found',
-                );
-              } on WrongPasswordAuthException {
-                await showErrorDialog(
-                  context,
-                  'Invalid credentials',
-                );
-              } on GenericAuthException {
-                await showErrorDialog(
-                  context,
-                  'Error occured',
-                );
-              }
             },
-            child: const Button(
-              borderRadius: 10,
-              textColor: secondaryColorLightTheme,
-              buttonText: 'Sign in',
-              buttonColor: [primaryColor2, primaryColor1],
+            child: Text(
+              'Not registered?, click HERE to sign up',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           )
         ],

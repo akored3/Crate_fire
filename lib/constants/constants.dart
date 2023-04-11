@@ -14,5 +14,7 @@ const bgColorDarkTheme = Color(0xFF19182C);
 const secondaryColorDarkTheme = Color(0xFF242339);
 const textColorDarkTheme = Color(0xFF132144);
 const bodyTextColorDarkTheme = Color(0xFF78819B);
+const gradient1 = Color(0xFF1D1E33);
+const gradient2 = Color(0xff04000f);
 
 const defaultPadding = 16.0;

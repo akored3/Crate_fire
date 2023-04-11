@@ -1,11 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:crate_fire/constants/constants.dart';
-import 'package:crate_fire/constants/routes.dart';
-import 'package:crate_fire/service/auth/auth_exceptions.dart';
-import 'package:crate_fire/service/auth/auth_service.dart';
+import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
+import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/cloud/firestore_provider.dart';
 import 'package:crate_fire/utilities/button.dart';
-import 'package:crate_fire/utilities/dialog/show_error_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -38,23 +38,12 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: defaultPadding * 3.5),
+      margin: const EdgeInsets.only(top: defaultPadding * 2.0),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 2.0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // TextField(
-          //   decoration: InputDecoration(
-          //     focusedBorder: UnderlineInputBorder(
-          //         borderSide: BorderSide(
-          //       color: Theme.of(context).brightness == Brightness.light
-          //           ? bodyTextColorLightTheme
-          //           : secondaryColorLightTheme,
-          //     )),
-          //     labelText: 'Username',
-          //   ),
-          // ),
           TextField(
             controller: _email,
             keyboardType: TextInputType.emailAddress,
@@ -100,47 +89,33 @@ class _SignUpFormState extends State<SignUpForm> {
               labelText: 'Password',
             ),
           ),
-          GestureDetector(
-            onTap: () async {
-              late final email = _email.text;
-              late final password = _password.text;
-              late final username = _username.text;
-              try {
-                await AuthService.fireBase().createUser(
-                  email: email,
-                  password: password,
-                );
+          Container(
+            margin: const EdgeInsets.only(top: defaultPadding * 2),
+            child: GradientButton(
+              label: 'Sign up',
+              height: MediaQuery.of(context).size.height / 10,
+              gradient:
+                  const LinearGradient(colors: [primaryColor2, primaryColor1]),
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                final username = _username.text;
                 await FirestoreProvider().saveUsername(username: username);
-                await AuthService.fireBase().sendEmailVerification();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    setupProfilePageRoute, (route) => false);
-              } on WeakPasswordAuthException {
-                await showErrDialog(
-                  context,
-                  'Weak password',
-                );
-              } on EmailAlreadyInUseAuthException {
-                await showErrDialog(
-                  context,
-                  'Email already in use',
-                );
-              } on InvalidEmailAuthException {
-                await showErrDialog(
-                  context,
-                  'Invalid email',
-                );
-              } on GenericAuthException {
-                await showErrDialog(
-                  context,
-                  'Error occured',
-                );
-              }
+                context.read<AuthBloc>().add(
+                      AuthEventRegister(email, password),
+                    );
+              },
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<AuthBloc>().add(
+                    const AuthEventLogout(),
+                  );
             },
-            child: const Button(
-              borderRadius: 10,
-              textColor: secondaryColorLightTheme,
-              buttonText: 'Sign up',
-              buttonColor: [primaryColor2, primaryColor1],
+            child: Text(
+              'Already registered?, click HERE to Log in',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           )
         ],

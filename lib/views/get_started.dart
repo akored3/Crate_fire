@@ -1,7 +1,10 @@
 import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/constants/routes.dart';
+import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
+import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/utilities/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GetStartedPage extends StatefulWidget {
   const GetStartedPage({super.key});
@@ -48,26 +51,32 @@ class _GetStartedPageState extends State<GetStartedPage> {
                   // This TextButton doesn't work , why?
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          signInRoute, (route) => false);
+                      // Navigator.of(context).pushNamedAndRemoveUntil(
+                      //     signInRoute, (route) => false);
+                      context.read<AuthBloc>().add(
+                            const AuthEventLogout(),
+                          );
                     },
                     child: const Text(
                       'Skip To Login',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          signInSignUpRoute, (route) => false);
+                  GradientButton(
+                    onPressed: () {
+                      // Navigator.of(context).pushNamedAndRemoveUntil(
+                      //     signInSignUpRoute, (route) => false);
+                      context
+                          .read<AuthBloc>()
+                          .add(const AuthEventShouldRegister());
                     },
-                    child: const Button(
-                      borderRadius: defaultPadding,
-                      buttonColor: [Colors.white, Colors.white],
-                      textColor: Colors.deepPurple,
-                      buttonText: 'Get Started',
-                    ),
-                  ),
+                    gradient: const LinearGradient(
+                        colors: [Colors.white, Colors.white]),
+                    label: 'Get Started',
+                    labelTextColor: Colors.deepPurple,
+                    width: MediaQuery.of(context).size.width / 0.5,
+                    height: MediaQuery.of(context).size.height / 13,
+                  )
                 ],
               ),
             ),
