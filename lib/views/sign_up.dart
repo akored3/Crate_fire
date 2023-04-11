@@ -94,8 +94,10 @@ class _SignUpFormState extends State<SignUpForm> {
             child: GradientButton(
               label: 'Sign up',
               height: MediaQuery.of(context).size.height / 10,
-              gradient:
-                  const LinearGradient(colors: [primaryColor2, primaryColor1]),
+              gradient: const LinearGradient(colors: [
+                primaryColor2,
+                primaryColor1,
+              ]),
               onPressed: () async {
                 final email = _email.text;
                 final password = _password.text;

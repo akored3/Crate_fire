@@ -1,6 +1,6 @@
 import 'package:crate_fire/service/auth/auth_provider.dart';
 import 'package:crate_fire/service/auth/auth_user.dart';
-import 'package:crate_fire/service/auth/firbase_auth_provider.dart';
+import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
 
 //The AuthService class is now what we expose to our UI!
 

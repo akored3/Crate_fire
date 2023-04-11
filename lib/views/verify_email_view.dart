@@ -1,8 +1,11 @@
 import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
+import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
+import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/utilities/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -47,34 +50,34 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 4.0,
             ),
-            GestureDetector(
-              onTap: () async {
-                await AuthService.fireBase().sendEmailVerification();
+            GradientButton(
+              label: 'Send email verification',
+              height: MediaQuery.of(context).size.height / 10,
+              gradient:
+                  const LinearGradient(colors: [primaryColor2, primaryColor1]),
+              onPressed: () {
+                context
+                    .read<AuthBloc>()
+                    .add(const AuthEventSendEmailVerification());
               },
-              child: const Button(
-                borderRadius: defaultPadding * 2,
-                textColor: secondaryColorLightTheme,
-                buttonText: 'Send email Verification',
-                buttonColor: [primaryColor2, primaryColor1],
-              ),
             ),
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
-            GestureDetector(
-              onTap: () async {
+            GradientButton(
+              label: 'Restart',
+              height: MediaQuery.of(context).size.height / 10,
+              gradient: const LinearGradient(colors: [
+                blackGradient,
+                blackGradient,
+              ]),
+              onPressed: () async {
                 await AuthService.fireBase().logout();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   getsStartedPageRoute,
                   (route) => false,
                 );
               },
-              child: const Button(
-                borderRadius: defaultPadding * 2,
-                textColor: secondaryColorLightTheme,
-                buttonText: 'Restart',
-                buttonColor: [blackGradient, blackGradient],
-              ),
             ),
           ],
         ),

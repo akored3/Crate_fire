@@ -13,7 +13,6 @@ class AuthUser {
     required this.id,
     required this.email,
   });
-  //Copying Firebase user into my AuthUser class
   factory AuthUser.fromFirebase(User user) => AuthUser(
         isEmailVerified: user.emailVerified,
         id: user.uid,

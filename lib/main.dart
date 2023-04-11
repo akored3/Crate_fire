@@ -2,7 +2,7 @@ import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
-import 'package:crate_fire/service/auth/firbase_auth_provider.dart';
+import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
 import 'package:crate_fire/theme.dart';
 import 'package:crate_fire/views/get_started.dart';
 import 'package:crate_fire/views/setup_profile.dart';

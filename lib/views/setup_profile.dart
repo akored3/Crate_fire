@@ -183,8 +183,12 @@ class _SetUpProfileState extends State<SetUpProfile> {
                           const SizedBox(
                             height: defaultPadding * 2,
                           ),
-                          GestureDetector(
-                            onTap: () async {
+                          GradientButton(
+                            label: 'Next',
+                            height: MediaQuery.of(context).size.height / 10,
+                            gradient: const LinearGradient(
+                                colors: [primaryColor2, primaryColor1]),
+                            onPressed: () async {
                               late final fullName = _fullName.text;
                               late final dateOfBirth = _dateOfBirth.text;
                               late final gender = _gender.text;
@@ -197,11 +201,6 @@ class _SetUpProfileState extends State<SetUpProfile> {
                                 country: country,
                               );
                             },
-                            child: const Button(
-                                borderRadius: defaultPadding,
-                                buttonColor: [Colors.black, Colors.black],
-                                textColor: Colors.white,
-                                buttonText: 'Next'),
                           ),
                         ],
                       ));
