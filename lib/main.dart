@@ -1,14 +1,13 @@
 import 'package:crate_fire/constants/routes.dart';
+import 'package:crate_fire/helpers/loading/loading_screen.dart';
 import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
 import 'package:crate_fire/theme.dart';
-import 'package:crate_fire/views/get_started.dart';
 import 'package:crate_fire/views/setup_profile.dart';
 import 'package:crate_fire/views/sign_in_page.dart';
 import 'package:crate_fire/views/sign_up_page.dart';
-import 'package:crate_fire/views/signin_signup.dart';
 import 'package:crate_fire/views/verify_email_view.dart';
 import 'package:crate_fire/views/welcome_user.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +48,16 @@ class HomePage extends StatelessWidget {
           const AuthEventInitialize(),
         );
 
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.isLoading) {
+          LoadingScreen().show(
+              context: context,
+              text: state.loadingText ?? 'Please wait a moment');
+        } else {
+          LoadingScreen().hide();
+        }
+      },
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
           return const WelcomeUser();
