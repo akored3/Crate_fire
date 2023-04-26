@@ -2,12 +2,11 @@ import 'package:crate_fire/service/auth/auth_provider.dart';
 import 'package:crate_fire/service/auth/auth_user.dart';
 import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
 
-//The AuthService class is now what we expose to our UI!
-
 class AuthService implements AuthProvider {
   final AuthProvider provider;
   const AuthService(this.provider);
 
+//what's this AuthService.fireBase()
   factory AuthService.fireBase() => AuthService(FirebaseAuthProvider());
 
   @override
@@ -34,4 +33,8 @@ class AuthService implements AuthProvider {
 
   @override
   Future<void> initialize() => provider.initialize();
+
+  @override
+  Future<void> sendPasswordReset({required String toEmail}) =>
+      provider.sendPasswordReset(toEmail: toEmail);
 }

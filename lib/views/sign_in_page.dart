@@ -7,7 +7,6 @@ import 'package:crate_fire/views/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-//This code throws this exception Unhandled Exception: Instance of 'UserNotLoggedInAuthException'
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -58,7 +57,7 @@ class _SignInPageState extends State<SignInPage> {
                   const SignInForm(),
                   Container(
                     margin: const EdgeInsets.only(
-                        top: defaultPadding * 4, bottom: defaultPadding * 2),
+                        top: defaultPadding * 3, bottom: defaultPadding * 2),
                     child: Text(
                       'Or sign in using',
                       style: Theme.of(context).textTheme.bodyMedium,

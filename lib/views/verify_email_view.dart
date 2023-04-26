@@ -1,6 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:crate_fire/constants/constants.dart';
-import 'package:crate_fire/constants/routes.dart';
-import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/utilities/button.dart';
@@ -72,11 +72,12 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 blackGradient,
               ]),
               onPressed: () async {
-                await AuthService.fireBase().logout();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  getsStartedPageRoute,
-                  (route) => false,
-                );
+                // await AuthService.fireBase().logout();
+                // Navigator.of(context).pushNamedAndRemoveUntil(
+                //   getsStartedPageRoute,
+                //   (route) => false,
+                // );
+                context.read<AuthBloc>().add(const AuthEventLogout());
               },
             ),
           ],

@@ -1,7 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:crate_fire/constants/constants.dart' show defaultPadding;
-import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/enums/menu_actions.dart';
-import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/cloud/firestore_provider.dart';
@@ -45,7 +45,7 @@ class WelcomeUser extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-        future: FirestoreProvider.getUserdata(userId: userId),
+        future: FirebaseFirestoreProvider.getUserdata(userId: userId),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:

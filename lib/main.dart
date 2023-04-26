@@ -4,6 +4,7 @@ import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
+import 'package:crate_fire/service/cloud/firestore_provider.dart';
 import 'package:crate_fire/theme.dart';
 import 'package:crate_fire/views/setup_profile.dart';
 import 'package:crate_fire/views/sign_in_page.dart';
@@ -13,7 +14,6 @@ import 'package:crate_fire/views/welcome_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-//How can i apply it to this code
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -21,7 +21,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       routes: {
         // signInRoute: (context) => const SignInPage(),
-        // signUpRoute: (context) => const SignUpPage(),
+        // signUpRoute: (context) => const SignUpPage(),.
         // signInSignUpRoute: (context) => const SignInSignUp(),
         // welcomeUserPageRoute: (context) => const WelcomeUser(),
         // verifyEmailRoute: (context) => const VerifyEmailView(),
@@ -32,7 +32,9 @@ void main() {
       theme: lightThemeData,
       darkTheme: darkThemeData,
       home: BlocProvider<AuthBloc>(
-        create: (context) => AuthBloc(FirebaseAuthProvider()),
+        create: (context) => AuthBloc(
+          FirebaseAuthProvider(),
+        ),
         child: const HomePage(),
       ),
     ),

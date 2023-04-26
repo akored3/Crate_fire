@@ -2,7 +2,6 @@
 import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
-import 'package:crate_fire/service/cloud/firestore_provider.dart';
 import 'package:crate_fire/utilities/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,9 +101,16 @@ class _SignUpFormState extends State<SignUpForm> {
                 final email = _email.text;
                 final password = _password.text;
                 final username = _username.text;
-                await FirestoreProvider().saveUsername(username: username);
+                // await FirestoreProvider().saveUsername(username: username);
+                // await FirestoreService.fireStore().saveUsername(
+                //   userName: username,
+                // );
                 context.read<AuthBloc>().add(
-                      AuthEventRegister(email, password),
+                      AuthEventRegister(
+                        email,
+                        password,
+                        username,
+                      ),
                     );
               },
             ),

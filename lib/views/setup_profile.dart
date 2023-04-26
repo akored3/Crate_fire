@@ -1,6 +1,7 @@
 import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/service/cloud/firestore_provider.dart';
+import 'package:crate_fire/service/cloud/firestore_service.dart';
 import 'package:crate_fire/utilities/button.dart';
 import 'package:crate_fire/utilities/widgets/input_widget.dart';
 import 'package:crate_fire/views/get_started.dart';
@@ -105,7 +106,7 @@ class _SetUpProfileState extends State<SetUpProfile> {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
-          future: FirestoreProvider.getUserdata(userId: userId),
+          future: FirebaseFirestoreProvider.getUserdata(userId: userId),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
@@ -194,7 +195,14 @@ class _SetUpProfileState extends State<SetUpProfile> {
                               late final gender = _gender.text;
                               late final country = _country.text;
 
-                              await FirestoreProvider().saveOtherUserData(
+                              // await FirestoreProvider().saveOtherUserData(
+                              //   fullName: fullName,
+                              //   dateOfBirth: dateOfBirth,
+                              //   gender: gender,
+                              //   country: country,
+                              // );
+                              await FirestoreService.fireStore()
+                                  .saveOtherUserData(
                                 fullName: fullName,
                                 dateOfBirth: dateOfBirth,
                                 gender: gender,

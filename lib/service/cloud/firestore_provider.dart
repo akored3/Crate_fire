@@ -1,28 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crate_fire/service/auth/auth_exceptions.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
+import 'package:crate_fire/service/cloud/save_user_data_provider.dart';
 
-class FirestoreProvider {
+class FirebaseFirestoreProvider implements UserDataSaverProvider {
   final _user = AuthService.fireBase().currentUser;
   final _db = FirebaseFirestore.instance;
 
-  Future<void> saveUsername({
-    required String username,
-  }) async {
-    final user = _user;
-    if (user == null) {
-      throw UserNotLoggedInAuthException();
-    }
-    final userDocRef = _db.collection('users').doc(user.id);
-    await userDocRef.set(
-      {'username': username},
-      //Set options merges this field with any other field in the document,
-      //it doesn't overwrite them
-      SetOptions(merge: true),
-    );
-  }
-
-//is this function ok?
+  @override
   Future<void> saveOtherUserData({
     required String fullName,
     required String dateOfBirth,
@@ -39,15 +24,33 @@ class FirestoreProvider {
         'fullName': fullName,
         'dateOfBirth': dateOfBirth,
         'gender': gender,
-        'country': country
+        'country': country,
       });
-    } catch (e) {
+    } on FirebaseException catch (e) {
       throw FirebaseException(
-          code: 'update failed', message: 'Failed', plugin: '');
+        plugin: '',
+        code: e.code,
+        message: e.message,
+      );
     }
   }
 
-//Why declare this function static?
+  @override
+  Future<void> saveUsername({
+    required String userName,
+  }) async {
+    final user = _user;
+    if (user == null) {
+      throw UserNotFoundAuthException();
+    }
+    final userDocRef = _db.collection('users').doc(user.id);
+    await userDocRef.set(
+      {'username': userName},
+      SetOptions(merge: true),
+    );
+  }
+
+  //Why declare this function static?
   static Future<Map<String, dynamic>> getUserdata({
     required String userId,
   }) async {

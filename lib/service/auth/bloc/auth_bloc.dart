@@ -2,10 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:crate_fire/service/auth/auth_provider.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
+import 'package:crate_fire/service/cloud/firestore_service.dart';
+import 'package:crate_fire/service/cloud/save_user_data_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(AuthProvider provider)
-      : super(const AuthStateUninitialized(isLoading: true)) {
+  AuthBloc(
+    AuthProvider provider,
+  ) : super(const AuthStateUninitialized(isLoading: true)) {
     //Initialize
     on<AuthEventInitialize>((event, emit) async {
       await provider.initialize();
@@ -35,11 +39,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventRegister>((event, emit) async {
       final email = event.email;
       final password = event.password;
+      final username = event.username;
       try {
         await provider.createUser(
           email: email,
           password: password,
         );
+        await FirestoreService.fireStore().saveUsername(userName: username);
         await provider.sendEmailVerification();
         emit(const AuthStateNeedsVerification(isLoading: false));
       } on Exception catch (e) {
@@ -65,14 +71,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: password,
         );
         if (!user.isEmailVerified) {
-          emit(const AuthStateNeedsVerification(isLoading: false));
+          emit(const AuthStateNeedsVerification(
+            isLoading: false,
+          ));
         } else {
           emit(AuthStateLoggedOut(
             exception: null,
             isLoading: false,
           ));
         }
-        emit(AuthStateLoggedIn(user: user, isLoading: false));
+        emit(AuthStateLoggedIn(
+          user: user,
+          isLoading: false,
+        ));
       } on Exception catch (e) {
         emit(AuthStateLoggedOut(
           exception: e,
@@ -88,9 +99,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       ));
     });
 
-    on<AuthEventLogout>((event, emit) {
+//Log out
+    on<AuthEventLogout>((event, emit) async {
       try {
-        provider.logout();
+        await provider.logout();
         emit(AuthStateLoggedOut(
           exception: null,
           isLoading: false,
@@ -101,6 +113,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           isLoading: false,
         ));
       }
+    });
+
+//Forgot password
+    on<AuthEventForgotPassword>((event, emit) async {
+      emit(const AuthStateForgotPassword(
+        exception: null,
+        hasSentEmail: false,
+        isLoading: false,
+      ));
+
+      final email = event.email;
+      if (email == null) {
+        return;
+      }
+      emit(const AuthStateForgotPassword(
+        exception: null,
+        hasSentEmail: false,
+        isLoading: true,
+      ));
+      bool didSendEmail = false;
+      Exception? exception;
+      try {
+        await provider.sendPasswordReset(toEmail: email);
+      } on FirebaseAuthException catch (e) {
+        exception = e;
+        didSendEmail = false;
+      }
+      emit(AuthStateForgotPassword(
+        exception: exception,
+        hasSentEmail: didSendEmail,
+        isLoading: false,
+      ));
     });
   }
 }

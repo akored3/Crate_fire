@@ -1,5 +1,4 @@
 import 'package:crate_fire/constants/constants.dart';
-import 'package:crate_fire/constants/routes.dart';
 import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/utilities/button.dart';
@@ -48,7 +47,6 @@ class _GetStartedPageState extends State<GetStartedPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // This TextButton doesn't work , why?
                   TextButton(
                     onPressed: () {
                       // Navigator.of(context).pushNamedAndRemoveUntil(

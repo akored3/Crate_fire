@@ -33,9 +33,10 @@ class _SignInFormState extends State<SignInForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Colors.black,
       margin: const EdgeInsets.only(top: defaultPadding * 4.0),
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 2.5,
+      height: MediaQuery.of(context).size.height / 2.2,
       // color: Colors.black,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -81,7 +82,7 @@ class _SignInFormState extends State<SignInForm> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 1),
             child: GradientButton(
               label: 'Sign in',
               gradient: const LinearGradient(
