@@ -1,11 +1,14 @@
 import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
+import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
+import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/cloud/firestore_provider.dart';
 import 'package:crate_fire/service/cloud/firestore_service.dart';
 import 'package:crate_fire/utilities/button.dart';
 import 'package:crate_fire/utilities/widgets/input_widget.dart';
 import 'package:crate_fire/views/get_started.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SetUpProfile extends StatefulWidget {
   const SetUpProfile({super.key});
@@ -194,20 +197,21 @@ class _SetUpProfileState extends State<SetUpProfile> {
                               late final dateOfBirth = _dateOfBirth.text;
                               late final gender = _gender.text;
                               late final country = _country.text;
-
-                              // await FirestoreProvider().saveOtherUserData(
+                              // await FirestoreService.fireStore()
+                              //     .saveOtherUserData(
                               //   fullName: fullName,
                               //   dateOfBirth: dateOfBirth,
                               //   gender: gender,
                               //   country: country,
                               // );
-                              await FirestoreService.fireStore()
-                                  .saveOtherUserData(
-                                fullName: fullName,
-                                dateOfBirth: dateOfBirth,
-                                gender: gender,
-                                country: country,
-                              );
+                              context
+                                  .read<AuthBloc>()
+                                  .add(AuthEventSetupUserProfile(
+                                    fullName,
+                                    dateOfBirth,
+                                    gender,
+                                    country,
+                                  ));
                             },
                           ),
                         ],

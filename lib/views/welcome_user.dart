@@ -2,6 +2,7 @@
 
 import 'package:crate_fire/constants/constants.dart' show defaultPadding;
 import 'package:crate_fire/enums/menu_actions.dart';
+import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/cloud/firestore_provider.dart';
@@ -45,7 +46,9 @@ class WelcomeUser extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-        future: FirebaseFirestoreProvider.getUserdata(userId: userId),
+        future: FirebaseFirestoreProvider.getUserdata(
+          userId: AuthService.fireBase().currentUser?.id ?? '',
+        ),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:

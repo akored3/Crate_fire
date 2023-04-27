@@ -25,7 +25,25 @@ class AuthEventRegister extends AuthEvent {
   final String password;
   final String username;
 
-  const AuthEventRegister(this.email, this.password, this.username);
+  const AuthEventRegister(
+    this.email,
+    this.password,
+    this.username,
+  );
+}
+
+class AuthEventSetupUserProfile extends AuthEvent {
+  final String fullName;
+  final String dateOfBirth;
+  final String gender;
+  final String country;
+
+  const AuthEventSetupUserProfile(
+    this.fullName,
+    this.dateOfBirth,
+    this.gender,
+    this.country,
+  );
 }
 
 class AuthEventShouldRegister extends AuthEvent {

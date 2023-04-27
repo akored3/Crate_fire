@@ -26,6 +26,14 @@ class AuthStateRegistering extends AuthState {
   }) : super(isLoading: isLoading);
 }
 
+class AuthStateStillRegistering extends AuthState {
+  final Exception? exception;
+  const AuthStateStillRegistering({
+    required bool isLoading,
+    required this.exception,
+  }) : super(isLoading: isLoading);
+}
+
 class AuthStateLoggedIn extends AuthState {
   final AuthUser user;
 

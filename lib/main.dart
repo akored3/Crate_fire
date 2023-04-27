@@ -69,6 +69,8 @@ class HomePage extends StatelessWidget {
           return const SignInPage();
         } else if (state is AuthStateRegistering) {
           return const SignUpPage();
+        } else if (state is AuthStateStillRegistering) {
+          return const SetUpProfile();
         } else {
           return const Scaffold(
             body: Center(

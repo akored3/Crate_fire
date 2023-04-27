@@ -3,7 +3,6 @@ import 'package:crate_fire/service/auth/auth_provider.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/cloud/firestore_service.dart';
-import 'package:crate_fire/service/cloud/save_user_data_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -46,12 +45,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: password,
         );
         await FirestoreService.fireStore().saveUsername(userName: username);
-        await provider.sendEmailVerification();
-        emit(const AuthStateNeedsVerification(isLoading: false));
+        emit(const AuthStateStillRegistering(
+          isLoading: false,
+          exception: null,
+        ));
       } on Exception catch (e) {
         emit(AuthStateRegistering(
           exception: e,
           isLoading: false,
+        ));
+      }
+    });
+
+    on<AuthEventSetupUserProfile>((event, emit) async {
+      final fullName = event.fullName;
+      final dateOfBirth = event.dateOfBirth;
+      final gender = event.gender;
+      final country = event.country;
+      try {
+        await FirestoreService.fireStore().saveOtherUserData(
+            fullName: fullName,
+            dateOfBirth: dateOfBirth,
+            gender: gender,
+            country: country);
+        emit(state);
+      } on Exception catch (e) {
+        emit(AuthStateStillRegistering(
+          isLoading: false,
+          exception: e,
         ));
       }
     });

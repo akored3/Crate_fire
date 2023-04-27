@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 typedef OnPressed = void Function();
 
 class GradientButton extends StatelessWidget {
-  final String label;
+  final String? label;
   final OnPressed? onPressed;
   final double? width;
   final double? height;
@@ -13,7 +13,7 @@ class GradientButton extends StatelessWidget {
   final Color? labelTextColor;
   const GradientButton({
     super.key,
-    required this.label,
+    this.label,
     this.onPressed,
     this.width,
     this.height,
