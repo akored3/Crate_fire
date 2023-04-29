@@ -4,7 +4,6 @@ import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
-import 'package:crate_fire/service/cloud/firestore_provider.dart';
 import 'package:crate_fire/theme.dart';
 import 'package:crate_fire/views/setup_profile.dart';
 import 'package:crate_fire/views/sign_in_page.dart';

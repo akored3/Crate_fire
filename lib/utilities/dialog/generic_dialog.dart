@@ -22,9 +22,13 @@ Future<T?> showGenericDialog<T>({
             //make it return an elevated button instead
             return GradientButton(
               label: optionsTitle,
-              gradient: const LinearGradient(
-                colors: [primaryColor2, primaryColor1],
-              ),
+              gradient: value == false
+                  ? const LinearGradient(
+                      colors: [primaryColor2, primaryColor1],
+                    )
+                  : const LinearGradient(
+                      colors: [blackGradient, blackGradient],
+                    ),
               onPressed: () {
                 if (value != null) {
                   Navigator.of(context).pop(value);
