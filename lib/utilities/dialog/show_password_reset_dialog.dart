@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 
 Future<void> showPasswordResetSentDialog(
   BuildContext context,
-  String title,
-  String content,
 ) {
   return showGenericDialog(
       context: context,
-      title: title,
-      content: content,
+      title: 'Password Reset',
+      content: 'Reset link has been sent to your email',
       optionsBuilder: () => {
             'Ok': null,
           });

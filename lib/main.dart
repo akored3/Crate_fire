@@ -5,6 +5,7 @@ import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
 import 'package:crate_fire/theme.dart';
+import 'package:crate_fire/views/password_reset_view.dart';
 import 'package:crate_fire/views/setup_profile.dart';
 import 'package:crate_fire/views/sign_in_page.dart';
 import 'package:crate_fire/views/sign_up_page.dart';
@@ -62,6 +63,8 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
           return const WelcomeUser();
+        } else if (state is AuthStateForgotPassword) {
+          return const PasswordResetView();
         } else if (state is AuthStateNeedsVerification) {
           return const VerifyEmailView();
         } else if (state is AuthStateLoggedOut) {

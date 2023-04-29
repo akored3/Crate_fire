@@ -74,7 +74,9 @@ class _SignInFormState extends State<SignInForm> {
           Container(
             margin: const EdgeInsets.only(left: 210),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<AuthBloc>().add(const AuthEventForgotPassword());
+              },
               child: Text(
                 'Forgot Password',
                 style: Theme.of(context).textTheme.bodySmall,
