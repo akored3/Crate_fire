@@ -6,6 +6,7 @@ import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
 import 'package:crate_fire/theme.dart';
 import 'package:crate_fire/views/password_reset_view.dart';
+import 'package:crate_fire/views/select_categories.dart';
 import 'package:crate_fire/views/setup_profile.dart';
 import 'package:crate_fire/views/sign_in_page.dart';
 import 'package:crate_fire/views/sign_up_page.dart';
@@ -20,12 +21,6 @@ void main() {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        // signInRoute: (context) => const SignInPage(),
-        // signUpRoute: (context) => const SignUpPage(),.
-        // signInSignUpRoute: (context) => const SignInSignUp(),
-        // welcomeUserPageRoute: (context) => const WelcomeUser(),
-        // verifyEmailRoute: (context) => const VerifyEmailView(),
-        // getsStartedPageRoute: (context) => const GetStartedPage(),
         setupProfilePageRoute: (context) => const SetUpProfile(),
       },
       title: 'Crate_fire',
@@ -35,7 +30,7 @@ void main() {
         create: (context) => AuthBloc(
           FirebaseAuthProvider(),
         ),
-        child: const HomePage(),
+        child: const SelectContentCategoriesPage(),
       ),
     ),
   );
@@ -71,7 +66,7 @@ class HomePage extends StatelessWidget {
           return const SignInPage();
         } else if (state is AuthStateRegistering) {
           return const SignUpPage();
-        } else if (state is AuthStateStillRegistering) {
+        } else if (state is AuthStateSettingUpProfile) {
           return const SetUpProfile();
         } else {
           return const Scaffold(

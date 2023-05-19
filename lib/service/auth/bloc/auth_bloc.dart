@@ -45,7 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: password,
         );
         await FirestoreService.fireStore().saveUsername(userName: username);
-        emit(const AuthStateStillRegistering(
+        emit(const AuthStateSettingUpProfile(
           isLoading: false,
           exception: null,
         ));
@@ -70,7 +70,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             country: country);
         emit(state);
       } on Exception catch (e) {
-        emit(AuthStateStillRegistering(
+        emit(AuthStateSettingUpProfile(
           isLoading: false,
           exception: e,
         ));

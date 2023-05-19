@@ -66,17 +66,32 @@ class _PasswordResetViewState extends State<PasswordResetView> {
               ),
               SizedBox(
                 width: screenSize.width * 0.8,
-                child: TextFormField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                child: Card(
+                  elevation: 10,
+                  color: Colors.white,
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    style: const TextStyle(
+                      color: blackGradient,
+                    ),
+                    autofocus: true,
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      fillColor: Colors.white,
+                      hintText: 'Email',
+                      hintStyle: TextStyle(
+                        color: primaryColor2,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: primaryColor2,
+                      ),
+                      border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: screenSize.height * 0.02),
+              SizedBox(height: screenSize.height * 0.05),
               GradientButton(
                 width: screenSize.width * 0.8,
                 height: screenSize.height * 0.08,

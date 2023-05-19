@@ -50,7 +50,6 @@ class FirebaseFirestoreProvider implements UserDataSaverProvider {
     );
   }
 
-  //Why declare this function static?
   static Future<Map<String, dynamic>> getUserdata({
     required String userId,
   }) async {
@@ -62,5 +61,24 @@ class FirebaseFirestoreProvider implements UserDataSaverProvider {
     } else {
       throw UserNotFoundAuthException();
     }
+  }
+
+  @override
+  Future<void> createContentCategory({
+    required String userId,
+    required List<String> categories,
+  }) async {
+    final user = _user;
+    if (user == null) {
+      throw UserNotFoundAuthException();
+    }
+    final userDocRef = _db.collection('users').doc(userId);
+    await userDocRef.set(
+        {
+          'categories': FieldValue.arrayUnion([categories])
+        },
+        SetOptions(
+          merge: true,
+        ));
   }
 }

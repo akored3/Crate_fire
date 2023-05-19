@@ -2,13 +2,14 @@ import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/service/auth/bloc/auth_bloc.dart';
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
+import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/cloud/firestore_provider.dart';
-import 'package:crate_fire/service/cloud/firestore_service.dart';
 import 'package:crate_fire/utilities/button.dart';
 import 'package:crate_fire/utilities/widgets/input_widget.dart';
 import 'package:crate_fire/views/get_started.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SetUpProfile extends StatefulWidget {
   const SetUpProfile({super.key});
@@ -24,12 +25,14 @@ class _SetUpProfileState extends State<SetUpProfile> {
   late final TextEditingController _dateOfBirth;
   late final TextEditingController _gender;
   late final TextEditingController _country;
+  late double _buttonWidth;
   @override
   void initState() {
     _fullName = TextEditingController();
     _dateOfBirth = TextEditingController();
     _gender = TextEditingController();
     _country = TextEditingController();
+    _buttonWidth = 10;
     super.initState();
   }
 
@@ -130,8 +133,9 @@ class _SetUpProfileState extends State<SetUpProfile> {
                             width: MediaQuery.of(context).size.width,
                             // color: Colors.white,
                             child: Text(
-                                'Hello @$username let\'s set up your Profile',
-                                style: Theme.of(context).textTheme.labelLarge),
+                              'Hello @$username let\'s set up your Profile',
+                              style: Theme.of(context).textTheme.labelLarge,
+                            ),
                           ),
                           UserDataInputField(
                             input: _fullName,
@@ -185,7 +189,57 @@ class _SetUpProfileState extends State<SetUpProfile> {
                             hintText: 'Full name',
                           ),
                           const SizedBox(
-                            height: defaultPadding * 2,
+                            height: defaultPadding * 5,
+                          ),
+                          BlocBuilder<AuthBloc, AuthState>(
+                            builder: (context, state) {
+                              if (state is AuthStateSettingUpProfile) {
+                                _buttonWidth = state.buttonWidth;
+                              }
+                              return Stack(
+                                children: [
+                                  GradientButton(
+                                    gradient: const LinearGradient(
+                                      colors: [blackGradient, blackGradient],
+                                    ),
+                                    height:
+                                        MediaQuery.of(context).size.height / 10,
+                                  ),
+                                  GradientButton(
+                                    gradient: const LinearGradient(
+                                      colors: [primaryColor1, primaryColor2],
+                                    ),
+                                    height:
+                                        MediaQuery.of(context).size.height / 10,
+                                    width: _buttonWidth,
+                                  ),
+                                  Positioned(
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    child: Center(
+                                        child: TextButton(
+                                      onPressed: () {
+                                        print('live bomb');
+                                      },
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          children: const [
+                                            TextSpan(text: 'NEXT'),
+                                          ],
+                                        ),
+                                      ),
+                                    )),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                           GradientButton(
                             label: 'Next',
@@ -197,13 +251,7 @@ class _SetUpProfileState extends State<SetUpProfile> {
                               late final dateOfBirth = _dateOfBirth.text;
                               late final gender = _gender.text;
                               late final country = _country.text;
-                              // await FirestoreService.fireStore()
-                              //     .saveOtherUserData(
-                              //   fullName: fullName,
-                              //   dateOfBirth: dateOfBirth,
-                              //   gender: gender,
-                              //   country: country,
-                              // );
+
                               context
                                   .read<AuthBloc>()
                                   .add(AuthEventSetupUserProfile(

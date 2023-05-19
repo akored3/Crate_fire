@@ -39,12 +39,12 @@ class GradientButton extends StatelessWidget {
             elevation: 5,
             shadowColor: Colors.purple,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(45),
+              borderRadius: BorderRadius.circular(defaultPadding),
             )),
         child: Ink(
           decoration: BoxDecoration(
             gradient: gradient,
-            borderRadius: BorderRadius.circular(45),
+            borderRadius: BorderRadius.circular(defaultPadding),
           ),
           child: Container(
             alignment: Alignment.center,

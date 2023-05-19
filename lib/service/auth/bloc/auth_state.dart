@@ -26,11 +26,14 @@ class AuthStateRegistering extends AuthState {
   }) : super(isLoading: isLoading);
 }
 
-class AuthStateStillRegistering extends AuthState {
+//can i set the new button width for this appstate like this?
+class AuthStateSettingUpProfile extends AuthState {
   final Exception? exception;
-  const AuthStateStillRegistering({
+  final double buttonWidth;
+  const AuthStateSettingUpProfile({
     required bool isLoading,
     required this.exception,
+    this.buttonWidth = 100,
   }) : super(isLoading: isLoading);
 }
 
