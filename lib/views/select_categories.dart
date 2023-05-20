@@ -1,4 +1,5 @@
 import 'package:crate_fire/constants/constants.dart';
+import 'package:crate_fire/model/content_categories.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/service/cloud/firestore_service.dart';
 import 'package:flutter/material.dart';
@@ -16,24 +17,34 @@ String get _userId => AuthService.fireBase().currentUser!.id;
 
 class _SelectContentCategoriesPageState
     extends State<SelectContentCategoriesPage> {
-  final List<String> _categories = [
-    'Lifestyle',
-    'Social',
-    'Technology',
-    'Food',
-    'Entrepreneur',
-    'Education',
-  ];
+  final List<String> _selectedCategories = [];
+  bool isTapped = false;
 
-  List<String> _selectedCategories = [];
+  void _selectCategories(String category) {
+    setState(() {
+      isTapped = !isTapped;
+      if (isTapped) {
+        _selectedCategories.add(category);
+      } else {
+        _selectedCategories.remove(category);
+      }
+    });
+  }
 
-  Future<void> _addUserCategory(String category) async {
-    await FirestoreService.fireStore()
-        .createContentCategory(userId: _userId, categories: [category]);
+  Future<void> _addUserCategory(
+    List<ContentCategory> category,
+  ) async {
+    await FirestoreService.fireStore().createContentCategory(
+      userId: _userId,
+      categories: _selectedCategories,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    Color cardColor =
+        isTapped ? Colors.grey.withOpacity(0.5) : Colors.transparent;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -105,48 +116,52 @@ class _SelectContentCategoriesPageState
                   final categoryImage = category.images;
                   final isSelected = _selectedCategories.contains(categoryName);
 
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        10,
+                  return GestureDetector(
+                    onTap: () => print('i work'),
+                    child: Card(
+                      color: cardColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
                       ),
-                    ),
-                    elevation: 5.0,
-                    shadowColor: Colors.black,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            //The image is not fitting into the border radius of the card
-                            child: Image.asset(
-                              categoryImage,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            top: 50,
-                            bottom: 0,
-                            child: Center(
-                                child: TextButton(
-                              onPressed: () {},
-                              child: RichText(
-                                text: TextSpan(
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 10,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(text: categoryName),
-                                  ],
-                                ),
+                      elevation: 5.0,
+                      shadowColor: Colors.black,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              //The image is not fitting into the border radius of the card
+                              child: Image.asset(
+                                categoryImage,
+                                fit: BoxFit.cover,
                               ),
-                            )),
-                          ),
-                        ],
+                            ),
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              top: 45,
+                              bottom: 0,
+                              child: Center(
+                                  child: TextButton(
+                                onPressed: () {},
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(text: categoryName),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -158,16 +173,6 @@ class _SelectContentCategoriesPageState
       ),
     );
   }
-}
-
-class ContentCategory {
-  final String name;
-  final String images;
-
-  const ContentCategory({
-    required this.name,
-    required this.images,
-  });
 }
 
 final List<ContentCategory> _cat = [
