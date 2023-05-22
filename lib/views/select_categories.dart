@@ -18,20 +18,28 @@ String get _userId => AuthService.fireBase().currentUser!.id;
 class _SelectContentCategoriesPageState
     extends State<SelectContentCategoriesPage> {
   final List<String> _selectedCategories = [];
-  bool _isTapped = false;
 
   void _selectCategories(String category) {
     setState(() {
-      _isTapped = !_isTapped;
-
-      if (_isTapped) {
-        _selectedCategories.add(category);
-        print(_selectedCategories);
-      }
-      if (!_isTapped) {
+      // _isTapped = !_isTapped;
+      // if (_isTapped) {
+      //   _selectedCategories.add(category);
+      //   print(_selectedCategories);
+      // }
+      // if (!_isTapped) {
+      //   _selectedCategories.remove(category);
+      // }
+      if (_selectedCategories.contains(category)) {
         _selectedCategories.remove(category);
+      } else {
+        _selectedCategories.add(category);
       }
+      print(_selectedCategories);
     });
+  }
+
+  bool _isCategorySelected(String category) {
+    return _selectedCategories.contains(category);
   }
 
   Future<void> _addUserCategories(
@@ -114,6 +122,8 @@ class _SelectContentCategoriesPageState
                   final categoryName = category.name;
                   final categoryImage = category.images;
 
+                  final isSelected = _isCategorySelected(categoryName);
+
                   return InkWell(
                     onTap: () => _selectCategories(categoryName),
                     child: Card(
@@ -134,10 +144,11 @@ class _SelectContentCategoriesPageState
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            if (_isTapped)
-                              Container(
-                                color: Colors.purple.withOpacity(0.2),
-                              ),
+                            Container(
+                              color: isSelected
+                                  ? Colors.purple.withOpacity(0.2)
+                                  : null,
+                            ),
                             Positioned(
                               left: 0,
                               right: 0,
