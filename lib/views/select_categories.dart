@@ -18,21 +18,24 @@ String get _userId => AuthService.fireBase().currentUser!.id;
 class _SelectContentCategoriesPageState
     extends State<SelectContentCategoriesPage> {
   final List<String> _selectedCategories = [];
-  bool isTapped = false;
+  bool _isTapped = false;
 
   void _selectCategories(String category) {
     setState(() {
-      isTapped = !isTapped;
-      if (isTapped) {
+      _isTapped = !_isTapped;
+
+      if (_isTapped) {
         _selectedCategories.add(category);
-      } else {
+        print(_selectedCategories);
+      }
+      if (!_isTapped) {
         _selectedCategories.remove(category);
       }
     });
   }
 
-  Future<void> _addUserCategory(
-    List<ContentCategory> category,
+  Future<void> _addUserCategories(
+    List<String> category,
   ) async {
     await FirestoreService.fireStore().createContentCategory(
       userId: _userId,
@@ -42,9 +45,6 @@ class _SelectContentCategoriesPageState
 
   @override
   Widget build(BuildContext context) {
-    Color cardColor =
-        isTapped ? Colors.grey.withOpacity(0.5) : Colors.transparent;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -71,7 +71,6 @@ class _SelectContentCategoriesPageState
         ),
         // color: Colors.white,
         child: Column(
-          //How can i have a grid view of categories in this column?
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -79,7 +78,7 @@ class _SelectContentCategoriesPageState
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
             Text(
               'Select at least five categories from the options\nbelow. Slide left or right for more options',
@@ -99,13 +98,13 @@ class _SelectContentCategoriesPageState
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 15,
             ),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 2.0,
+                  childAspectRatio: 1.6,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
@@ -114,12 +113,10 @@ class _SelectContentCategoriesPageState
                   final category = _cat[index];
                   final categoryName = category.name;
                   final categoryImage = category.images;
-                  final isSelected = _selectedCategories.contains(categoryName);
 
-                  return GestureDetector(
-                    onTap: () => print('i work'),
+                  return InkWell(
+                    onTap: () => _selectCategories(categoryName),
                     child: Card(
-                      color: cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                           10,
@@ -132,25 +129,25 @@ class _SelectContentCategoriesPageState
                         child: Stack(
                           children: [
                             Positioned.fill(
-                              //The image is not fitting into the border radius of the card
                               child: Image.asset(
                                 categoryImage,
                                 fit: BoxFit.cover,
                               ),
                             ),
+                            if (_isTapped)
+                              Container(
+                                color: Colors.purple.withOpacity(0.2),
+                              ),
                             Positioned(
                               left: 0,
                               right: 0,
                               top: 45,
                               bottom: 0,
                               child: Center(
-                                  child: TextButton(
-                                onPressed: () {},
                                 child: RichText(
                                   text: TextSpan(
                                     style: GoogleFonts.montserrat(
-                                      fontSize: 13,
-                                      color: Colors.white,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                     ),
                                     children: [
@@ -158,7 +155,7 @@ class _SelectContentCategoriesPageState
                                     ],
                                   ),
                                 ),
-                              )),
+                              ),
                             ),
                           ],
                         ),
@@ -189,15 +186,65 @@ final List<ContentCategory> _cat = [
     images: 'assets/images/technology.jpg',
   ),
   const ContentCategory(
-    name: 'Entreprenuer',
-    images: 'assets/images/entrepreneur.jpg',
-  ),
-  const ContentCategory(
     name: 'Food',
     images: 'assets/images/food.jpg',
+  ),
+  const ContentCategory(
+    name: 'Entrepreneur',
+    images: 'assets/images/entrepreneur.jpg',
   ),
   const ContentCategory(
     name: 'Education',
     images: 'assets/images/education.jpg',
   ),
 ];
+
+class MyIdea extends StatefulWidget {
+  const MyIdea({super.key});
+
+  @override
+  State<MyIdea> createState() => _MyIdeaState();
+}
+
+class _MyIdeaState extends State<MyIdea> {
+  bool _isTapped = false;
+  final List<String> _selected = [];
+
+  void _handleTap() {
+    setState(() {
+      _isTapped = !_isTapped;
+      _isTapped ? _selected.add(1.toString()) : _selected.remove(1.toString());
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: SizedBox(
+          width: 150,
+          height: 100,
+          child: GestureDetector(
+            onTap: _handleTap,
+            child: Card(
+              elevation: 5.0,
+              color: Colors.white,
+              child: Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/lifestyle.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  if (_isTapped)
+                    Container(
+                      color: Colors.purple.withOpacity(0.2),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
