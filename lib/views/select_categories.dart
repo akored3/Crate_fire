@@ -34,7 +34,6 @@ class _SelectContentCategoriesPageState
       } else {
         _selectedCategories.add(category);
       }
-      print(_selectedCategories);
     });
   }
 
@@ -209,53 +208,3 @@ final List<ContentCategory> _cat = [
     images: 'assets/images/education.jpg',
   ),
 ];
-
-class MyIdea extends StatefulWidget {
-  const MyIdea({super.key});
-
-  @override
-  State<MyIdea> createState() => _MyIdeaState();
-}
-
-class _MyIdeaState extends State<MyIdea> {
-  bool _isTapped = false;
-  final List<String> _selected = [];
-
-  void _handleTap() {
-    setState(() {
-      _isTapped = !_isTapped;
-      _isTapped ? _selected.add(1.toString()) : _selected.remove(1.toString());
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: 150,
-          height: 100,
-          child: GestureDetector(
-            onTap: _handleTap,
-            child: Card(
-              elevation: 5.0,
-              color: Colors.white,
-              child: Stack(
-                children: [
-                  Image.asset(
-                    'assets/images/lifestyle.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                  if (_isTapped)
-                    Container(
-                      color: Colors.purple.withOpacity(0.2),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
