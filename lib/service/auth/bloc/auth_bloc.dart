@@ -68,12 +68,31 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             dateOfBirth: dateOfBirth,
             gender: gender,
             country: country);
-        emit(state);
+        emit(const AuthStateSelectContentCategories(
+          isLoading: false,
+          exception: null,
+        ));
       } on Exception catch (e) {
         emit(AuthStateSettingUpProfile(
           isLoading: false,
           exception: e,
         ));
+      }
+    });
+
+    on<AuthEventChooseContentCategories>((event, emit) async {
+      final categories = event.categories;
+      try {
+        await FirestoreService.fireStore().saveContentCategories(
+          categories: categories,
+        );
+      } on Exception catch (e) {
+        emit(
+          AuthStateSelectContentCategories(
+            isLoading: false,
+            exception: e,
+          ),
+        );
       }
     });
 

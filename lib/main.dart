@@ -30,7 +30,7 @@ void main() {
         create: (context) => AuthBloc(
           FirebaseAuthProvider(),
         ),
-        child: const SelectContentCategoriesPage(),
+        child: const HomePage(),
       ),
     ),
   );
@@ -68,6 +68,8 @@ class HomePage extends StatelessWidget {
           return const SignUpPage();
         } else if (state is AuthStateSettingUpProfile) {
           return const SetUpProfile();
+        } else if (state is AuthStateSelectContentCategories) {
+          return const SelectContentCategoriesPage();
         } else {
           return const Scaffold(
             body: Center(

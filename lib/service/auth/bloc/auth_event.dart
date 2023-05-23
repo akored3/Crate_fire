@@ -46,6 +46,13 @@ class AuthEventSetupUserProfile extends AuthEvent {
   );
 }
 
+class AuthEventChooseContentCategories extends AuthEvent {
+  final List<String> categories;
+  const AuthEventChooseContentCategories(
+    this.categories,
+  );
+}
+
 class AuthEventShouldRegister extends AuthEvent {
   const AuthEventShouldRegister();
 }

@@ -64,15 +64,14 @@ class FirebaseFirestoreProvider implements UserDataSaverProvider {
   }
 
   @override
-  Future<void> createContentCategory({
-    required String userId,
+  Future<void> saveContentCategories({
     required List<String> categories,
   }) async {
     final user = _user;
     if (user == null) {
       throw UserNotFoundAuthException();
     }
-    final userDocRef = _db.collection('users').doc(userId);
+    final userDocRef = _db.collection('users').doc(user.id);
     await userDocRef.set(
         {
           'categories': FieldValue.arrayUnion([categories])

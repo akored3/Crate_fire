@@ -37,6 +37,17 @@ class AuthStateSettingUpProfile extends AuthState {
   }) : super(isLoading: isLoading);
 }
 
+class AuthStateSelectContentCategories extends AuthState {
+  final Exception? exception;
+  final double buttonWidth;
+
+  const AuthStateSelectContentCategories({
+    required bool isLoading,
+    required this.exception,
+    this.buttonWidth = 150,
+  }) : super(isLoading: isLoading);
+}
+
 class AuthStateLoggedIn extends AuthState {
   final AuthUser user;
 

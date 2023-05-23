@@ -2,6 +2,7 @@ import 'package:crate_fire/constants/constants.dart';
 import 'package:crate_fire/model/content_categories.dart';
 import 'package:crate_fire/service/auth/auth_service.dart';
 import 'package:crate_fire/service/cloud/firestore_service.dart';
+import 'package:crate_fire/utilities/button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,18 +18,11 @@ String get _userId => AuthService.fireBase().currentUser!.id;
 
 class _SelectContentCategoriesPageState
     extends State<SelectContentCategoriesPage> {
+  late double _buttonWidth;
   final List<String> _selectedCategories = [];
 
   void _selectCategories(String category) {
     setState(() {
-      // _isTapped = !_isTapped;
-      // if (_isTapped) {
-      //   _selectedCategories.add(category);
-      //   print(_selectedCategories);
-      // }
-      // if (!_isTapped) {
-      //   _selectedCategories.remove(category);
-      // }
       if (_selectedCategories.contains(category)) {
         _selectedCategories.remove(category);
       } else {
@@ -39,15 +33,6 @@ class _SelectContentCategoriesPageState
 
   bool _isCategorySelected(String category) {
     return _selectedCategories.contains(category);
-  }
-
-  Future<void> _addUserCategories(
-    List<String> category,
-  ) async {
-    await FirestoreService.fireStore().createContentCategory(
-      userId: _userId,
-      categories: _selectedCategories,
-    );
   }
 
   @override
@@ -111,13 +96,13 @@ class _SelectContentCategoriesPageState
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 1.6,
+                  childAspectRatio: 1.8,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
-                itemCount: _cat.length,
+                itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  final category = _cat[index];
+                  final category = categories[index];
                   final categoryName = category.name;
                   final categoryImage = category.images;
 
@@ -175,36 +160,55 @@ class _SelectContentCategoriesPageState
                 },
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            Stack(
+              children: [
+                GradientButton(
+                  gradient: const LinearGradient(
+                    colors: [blackGradient, blackGradient],
+                  ),
+                  height: MediaQuery.of(context).size.height / 10,
+                ),
+                GradientButton(
+                  gradient: const LinearGradient(
+                    colors: [primaryColor1, primaryColor2],
+                  ),
+                  height: MediaQuery.of(context).size.height / 10,
+                  width: _buttonWidth,
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Center(
+                    child: Center(
+                      child: TextButton(
+                        onPressed: () {
+                          print('live bomb');
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                              style: GoogleFonts.montserrat(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              children: const [
+                                TextSpan(text: 'NEXT'),
+                              ]),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-final List<ContentCategory> _cat = [
-  const ContentCategory(
-    name: 'Lifestyle',
-    images: 'assets/images/lifestyle.jpg',
-  ),
-  const ContentCategory(
-    name: 'Social',
-    images: 'assets/images/social.jpg',
-  ),
-  const ContentCategory(
-    name: 'Technology',
-    images: 'assets/images/technology.jpg',
-  ),
-  const ContentCategory(
-    name: 'Food',
-    images: 'assets/images/food.jpg',
-  ),
-  const ContentCategory(
-    name: 'Entrepreneur',
-    images: 'assets/images/entrepreneur.jpg',
-  ),
-  const ContentCategory(
-    name: 'Education',
-    images: 'assets/images/education.jpg',
-  ),
-];

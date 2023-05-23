@@ -26,12 +26,10 @@ class FirestoreService implements UserDataSaverProvider {
       provider.saveUsername(userName: userName);
 
   @override
-  Future<void> createContentCategory({
-    required String userId,
+  Future<void> saveContentCategories({
     required List<String> categories,
   }) =>
-      provider.createContentCategory(
-        userId: userId,
+      provider.saveContentCategories(
         categories: categories,
       );
 }

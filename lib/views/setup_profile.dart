@@ -219,23 +219,23 @@ class _SetUpProfileState extends State<SetUpProfile> {
                                     top: 0,
                                     bottom: 0,
                                     child: Center(
-                                        child: TextButton(
-                                      onPressed: () {
-                                        print('live bomb');
-                                      },
-                                      child: RichText(
-                                        text: TextSpan(
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          children: const [
-                                            TextSpan(text: 'NEXT'),
-                                          ],
+                                      child: TextButton(
+                                        onPressed: () {
+                                          print('live bomb');
+                                        },
+                                        child: RichText(
+                                          text: TextSpan(
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 15,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              children: const [
+                                                TextSpan(text: 'NEXT'),
+                                              ]),
                                         ),
                                       ),
-                                    )),
+                                    ),
                                   ),
                                 ],
                               );

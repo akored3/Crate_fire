@@ -6,8 +6,7 @@ abstract class UserDataSaverProvider {
     required String gender,
     required String country,
   });
-  Future<void> createContentCategory({
-    required String userId,
+  Future<void> saveContentCategories({
     required List<String> categories,
   });
 }
