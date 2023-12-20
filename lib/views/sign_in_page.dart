@@ -63,10 +63,10 @@ class _SignInPageState extends State<SignInPage> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
-                  Center(
+                  const Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Icon(Icons.facebook_sharp),
                         Icon(Icons.reddit_outlined),
                         Icon(Icons.search),

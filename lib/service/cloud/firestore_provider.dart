@@ -74,7 +74,9 @@ class FirebaseFirestoreProvider implements UserDataSaverProvider {
     final userDocRef = _db.collection('users').doc(user.id);
     await userDocRef.set(
         {
-          'categories': FieldValue.arrayUnion([categories])
+          'categories': FieldValue.arrayUnion(
+            categories,
+          ),
         },
         SetOptions(
           merge: true,

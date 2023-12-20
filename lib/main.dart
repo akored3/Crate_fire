@@ -5,6 +5,7 @@ import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/auth/firebase_auth_provider.dart';
 import 'package:crate_fire/theme.dart';
+import 'package:crate_fire/views/import_friends.dart';
 import 'package:crate_fire/views/password_reset_view.dart';
 import 'package:crate_fire/views/select_categories.dart';
 import 'package:crate_fire/views/setup_profile.dart';
@@ -14,6 +15,7 @@ import 'package:crate_fire/views/verify_email_view.dart';
 import 'package:crate_fire/views/welcome_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:crate_fire/utilities/screen_size_config.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +43,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenSizeConfig.init(MediaQuery.of(context).size, const Size(428, 926));
+
     context.read<AuthBloc>().add(
           const AuthEventInitialize(),
         );
@@ -70,14 +74,55 @@ class HomePage extends StatelessWidget {
           return const SetUpProfile();
         } else if (state is AuthStateSelectContentCategories) {
           return const SelectContentCategoriesPage();
+        } else if (state is AuthStateImportFriends) {
+          return const ImportFriendsView();
         } else {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return const SignInPage();
         }
       },
+    );
+  }
+}
+
+class HomeDebug extends StatelessWidget {
+  const HomeDebug({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    context.read<AuthBloc>().add(
+          const AuthEventInitialize(),
+        );
+
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: ((context, state) {
+        if (state.isLoading) {
+          LoadingScreen().show(
+            context: context,
+            text: state.loadingText ?? 'Please wait a moment',
+          );
+        } else {
+          LoadingScreen().hide();
+        }
+      }),
+      builder: ((context, state) {
+        if (state is AuthStateLoggedIn) {
+          return const WelcomeUser();
+        } else if (state is AuthStateLoggedOut) {
+          return const SignInPage();
+        } else if (state is AuthStateRegistering) {
+          return const SignUpPage();
+        } else if (state is AuthStateSettingUpProfile) {
+          return const SetUpProfile();
+        } else if (state is AuthStateSelectContentCategories) {
+          return const SelectContentCategoriesPage();
+        } else if (state is AuthStateImportFriends) {
+          return const ImportFriendsView();
+        } else if (state is AuthStateForgotPassword) {
+          return const PasswordResetView();
+        } else {
+          return const Scaffold();
+        }
+      }),
     );
   }
 }

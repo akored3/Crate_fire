@@ -14,7 +14,7 @@ class SignInSignUp extends StatefulWidget {
 class _SignInSignUpState extends State<SignInSignUp> {
   bool _isLoginForm = true;
 
-  void _toogleForm() {
+  void _toggleForm() {
     setState(() {
       _isLoginForm = !_isLoginForm;
     });
@@ -40,7 +40,7 @@ class _SignInSignUpState extends State<SignInSignUp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: _toogleForm,
+                      onTap: _toggleForm,
                       child: Column(
                         children: [
                           Container(
@@ -67,7 +67,7 @@ class _SignInSignUpState extends State<SignInSignUp> {
                       ),
                     ),
                     InkWell(
-                      onTap: _toogleForm,
+                      onTap: _toggleForm,
                       child: Column(
                         children: [
                           Container(
@@ -111,10 +111,10 @@ class _SignInSignUpState extends State<SignInSignUp> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
-                Center(
+                const Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children:  [
                       Icon(Icons.facebook_sharp),
                       Icon(Icons.reddit_outlined),
                       Icon(Icons.search),

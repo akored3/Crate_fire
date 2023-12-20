@@ -17,7 +17,10 @@ class AuthEventLogin extends AuthEvent {
   final String email;
   final String password;
 
-  const AuthEventLogin(this.email, this.password);
+  const AuthEventLogin(
+    this.email,
+    this.password,
+  );
 }
 
 class AuthEventRegister extends AuthEvent {
@@ -51,6 +54,10 @@ class AuthEventChooseContentCategories extends AuthEvent {
   const AuthEventChooseContentCategories(
     this.categories,
   );
+}
+
+class AuthEventImportFriends extends AuthEvent {
+  const AuthEventImportFriends();
 }
 
 class AuthEventShouldRegister extends AuthEvent {

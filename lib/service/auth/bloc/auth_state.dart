@@ -44,7 +44,16 @@ class AuthStateSelectContentCategories extends AuthState {
   const AuthStateSelectContentCategories({
     required bool isLoading,
     required this.exception,
-    this.buttonWidth = 150,
+    this.buttonWidth = 165,
+  }) : super(isLoading: isLoading);
+}
+
+class AuthStateImportFriends extends AuthState {
+  final double buttonWidth;
+
+  const AuthStateImportFriends({
+    required bool isLoading,
+    this.buttonWidth = 300,
   }) : super(isLoading: isLoading);
 }
 

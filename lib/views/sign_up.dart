@@ -101,10 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 final email = _email.text;
                 final password = _password.text;
                 final username = _username.text;
-                // await FirestoreProvider().saveUsername(username: username);
-                // await FirestoreService.fireStore().saveUsername(
-                //   userName: username,
-                // );
+
                 context.read<AuthBloc>().add(
                       AuthEventRegister(
                         email,

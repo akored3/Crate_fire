@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:crate_fire/service/auth/auth_provider.dart';
+import 'package:crate_fire/service/auth/auth_provider.dart' as my_auth;
 import 'package:crate_fire/service/auth/bloc/auth_event.dart';
 import 'package:crate_fire/service/auth/bloc/auth_state.dart';
 import 'package:crate_fire/service/cloud/firestore_service.dart';
@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(
-    AuthProvider provider,
+    my_auth.AuthProvider provider,
   ) : super(const AuthStateUninitialized(isLoading: true)) {
     //Initialize
     on<AuthEventInitialize>((event, emit) async {
@@ -85,6 +85,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await FirestoreService.fireStore().saveContentCategories(
           categories: categories,
+        );
+        emit(
+          const AuthStateImportFriends(
+            isLoading: false,
+          ),
         );
       } on Exception catch (e) {
         emit(

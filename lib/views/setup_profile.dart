@@ -186,10 +186,10 @@ class _SetUpProfileState extends State<SetUpProfile> {
                           ),
                           UserDataInputField(
                             input: _country,
-                            hintText: 'Full name',
+                            hintText: 'Country',
                           ),
                           const SizedBox(
-                            height: defaultPadding * 5,
+                            height: defaultPadding * 10,
                           ),
                           BlocBuilder<AuthBloc, AuthState>(
                             builder: (context, state) {
@@ -220,8 +220,20 @@ class _SetUpProfileState extends State<SetUpProfile> {
                                     bottom: 0,
                                     child: Center(
                                       child: TextButton(
-                                        onPressed: () {
-                                          print('live bomb');
+                                        onPressed: () async {
+                                          final fullName = _fullName.text;
+                                          final dateOfBirth = _dateOfBirth.text;
+                                          final gender = _gender.text;
+                                          final country = _country.text;
+
+                                          context
+                                              .read<AuthBloc>()
+                                              .add(AuthEventSetupUserProfile(
+                                                fullName,
+                                                dateOfBirth,
+                                                gender,
+                                                country,
+                                              ));
                                         },
                                         child: RichText(
                                           text: TextSpan(
@@ -239,27 +251,6 @@ class _SetUpProfileState extends State<SetUpProfile> {
                                   ),
                                 ],
                               );
-                            },
-                          ),
-                          GradientButton(
-                            label: 'Next',
-                            height: MediaQuery.of(context).size.height / 10,
-                            gradient: const LinearGradient(
-                                colors: [primaryColor2, primaryColor1]),
-                            onPressed: () async {
-                              late final fullName = _fullName.text;
-                              late final dateOfBirth = _dateOfBirth.text;
-                              late final gender = _gender.text;
-                              late final country = _country.text;
-
-                              context
-                                  .read<AuthBloc>()
-                                  .add(AuthEventSetupUserProfile(
-                                    fullName,
-                                    dateOfBirth,
-                                    gender,
-                                    country,
-                                  ));
                             },
                           ),
                         ],

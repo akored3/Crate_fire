@@ -100,7 +100,7 @@ class _SignInFormState extends State<SignInForm> {
                       ),
                     );
               },
-              height: MediaQuery.of(context).size.height / 10,
+              height: 70,
             ),
           ),
           TextButton(
